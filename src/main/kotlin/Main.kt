@@ -1,5 +1,5 @@
-import day1.CalorieCounting
+import day2.RockPaperScissors
 
 fun main() {
-    CalorieCounting().topThreeCount()
+    RockPaperScissors().totalPoints()
 }
