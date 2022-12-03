@@ -4,8 +4,10 @@ class RockPaperScissors {
     fun totalPoints() {
         var points = 0
         while (true) {
-            val (opponent, my) = readLine()?.split(" ") ?: break
-            points += Shape.parse(my).run { this.points + result(Shape.parse(opponent)) }
+            val (shape, result) = readLine()?.split(" ") ?: break
+            val opponent = Shape.parse(shape)
+            val my = Shape.parse((opponent.points - 1 + result(result)) % 3 + 1)
+            points += my.points + my.result(opponent)
         }
         println(points)
     }
@@ -28,11 +30,20 @@ class RockPaperScissors {
             private const val WON_POINTS = 6
 
             fun parse(string: String): Shape = when(string) {
-                "A", "X" -> ROCK
-                "B", "Y" -> PAPER
-                "C", "Z" -> SCISSORS
+                "A" -> ROCK
+                "B" -> PAPER
+                "C" -> SCISSORS
                 else -> throw IllegalStateException()
             }
+
+            fun parse(points: Int): Shape = values().first { it.points == points}
         }
+    }
+
+    private fun result(string: String) = when(string) {
+        "X" -> 2
+        "Y" -> 0
+        "Z" -> 1
+        else -> throw IllegalStateException()
     }
 }
