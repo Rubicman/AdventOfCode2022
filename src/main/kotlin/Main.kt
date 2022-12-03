@@ -1,5 +1,5 @@
-import day2.RockPaperScissors
+import day3.RucksackReorganization
 
 fun main() {
-    RockPaperScissors().totalPoints()
+    RucksackReorganization().findErrors()
 }
