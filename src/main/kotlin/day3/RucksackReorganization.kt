@@ -18,14 +18,26 @@ class RucksackReorganization {
             }
         }
 
+        println(doubleTypes.map(this::priority).sum())
+    }
+
+    fun badges() {
         var sum = 0
-        for (type in doubleTypes) {
-            sum += if (type.isLowerCase()) {
-                type - 'a' + 1
-            } else {
-                type - 'A' + 27
-            }
+
+        while (true) {
+            val first = readlnOrNull() ?: break
+            val second = readln().toSet()
+            val third = readln().toSet()
+
+            sum += priority(first.first { second.contains(it) && third.contains(it) })
         }
+
         println(sum)
+    }
+
+    private fun priority(type: Char) = if (type.isLowerCase()) {
+        type - 'a' + 1
+    } else {
+        type - 'A' + 27
     }
 }
