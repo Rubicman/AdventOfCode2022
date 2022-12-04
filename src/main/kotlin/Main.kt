@@ -1,5 +1,5 @@
-import day3.RucksackReorganization
+import day4.CampCleanup
 
 fun main() {
-    RucksackReorganization().badges()
+    CampCleanup().fullyContainsPairs()
 }
