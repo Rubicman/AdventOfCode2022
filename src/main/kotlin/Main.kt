@@ -1,5 +1,5 @@
-import day4.CampCleanup
+import day5.SupplyStacks
 
 fun main() {
-    CampCleanup().overlapPairs()
+    SupplyStacks().rearrange()
 }
