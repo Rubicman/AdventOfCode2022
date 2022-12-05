@@ -15,11 +15,11 @@ class SupplyStacks {
                 lines.add(line)
         }
 
-        val stacks = Array(n) { ArrayDeque<Char>() }
+        val stacks = Array(n) { ArrayList<Char>() }
         for (i in lines.indices.reversed()) {
             for (j in 0 until n) {
                 if (lines[i][j] != ' ')
-                    stacks[j].addLast(lines[i][j])
+                    stacks[j].add(lines[i][j])
             }
         }
 
@@ -29,9 +29,9 @@ class SupplyStacks {
             val count = command[1].toInt()
             val from = command[3].toInt() - 1
             val to = command[5].toInt() - 1
-
+            stacks[to].addAll(stacks[from].takeLast(count))
             repeat(count) {
-                stacks[to].addLast(stacks[from].removeLast())
+                stacks[from].removeLast()
             }
         }
 
