@@ -1,6 +1,5 @@
-import day5.SupplyStacks
-import day6.TuningTrouble
+import day7.NoSpaceLeftOnDevice
 
 fun main() {
-    TuningTrouble().startOfTheMessage()
+    NoSpaceLeftOnDevice().lightDirectories()
 }
