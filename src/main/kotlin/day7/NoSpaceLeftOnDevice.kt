@@ -2,6 +2,21 @@ package day7
 
 class NoSpaceLeftOnDevice {
     fun lightDirectories() {
+        println(dfs(buildFileTree()))
+    }
+
+    fun deleteDirectory() {
+        val root = buildFileTree()
+        val searchingSize = root.size - 40_000_000
+        if (searchingSize <= 0) {
+            println(0)
+            return
+        }
+
+        println(dfs(root, searchingSize))
+    }
+
+    private fun buildFileTree(): Directory {
         val root = Directory("/", null)
         var currentDirectory = root
 
@@ -21,14 +36,21 @@ class NoSpaceLeftOnDevice {
                 currentDirectory.children.putIfAbsent(input[1], File(input[1], input[0].toLong()))
             }
         }
-
-        println(dfs(root))
+        return root
     }
 
     private fun dfs(directory: Directory): Long {
         val sum = if (directory.size <= 100_000) directory.size else 0
 
-        return sum + directory.children.values.filterIsInstance<Directory>().sumOf { dfs(it) }
+        return sum + directory.subDirs.sumOf { dfs(it) }
+    }
+
+    private fun dfs(directory: Directory, size: Long): Long {
+        var bestSize = directory.subDirs.minOfOrNull { dfs(it, size) } ?: Long.MAX_VALUE
+
+        if (directory.size >= size) bestSize = minOf(bestSize, directory.size)
+
+        return bestSize
     }
 }
 
@@ -55,4 +77,7 @@ data class Directory(
             }
             return _size!!
         }
+
+    val subDirs: List<Directory>
+        get() = children.values.filterIsInstance<Directory>()
 }
