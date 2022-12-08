@@ -1,5 +1,5 @@
-import day7.NoSpaceLeftOnDevice
+import day8.TreetopTreeHouse
 
 fun main() {
-    NoSpaceLeftOnDevice().deleteDirectory()
+    TreetopTreeHouse().visibleTrees()
 }
