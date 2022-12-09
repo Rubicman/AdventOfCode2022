@@ -1,5 +1,5 @@
-import day8.TreetopTreeHouse
+import day9.RopeBridge
 
 fun main() {
-    TreetopTreeHouse().bestPosition()
+    RopeBridge().simulateTail()
 }
