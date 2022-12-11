@@ -1,5 +1,5 @@
-import day10.CathodeRayTube
+import day11.MonkeyInTheMiddle
 
 fun main() {
-    CathodeRayTube().draw()
+    MonkeyInTheMiddle().keepAway()
 }
