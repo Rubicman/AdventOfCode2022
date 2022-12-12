@@ -1,5 +1,5 @@
-import day11.MonkeyInTheMiddle
+import day12.HillClimbingAlgorithm
 
 fun main() {
-    MonkeyInTheMiddle().keepAway()
+    HillClimbingAlgorithm().findWay()
 }
