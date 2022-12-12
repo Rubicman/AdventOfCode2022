@@ -10,7 +10,7 @@ class HillClimbingAlgorithm {
 
         for (i in distances.indices) {
             for (j in distances[0].indices) {
-                if (grid[i][j] == 'S') {
+                if (grid[i][j] == 'S' || grid[i][j] == 'a') {
                     queue.addLast(i to j)
                     distances[i][j] = 0
                 }
