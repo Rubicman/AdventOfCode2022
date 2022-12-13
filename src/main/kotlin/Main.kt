@@ -1,5 +1,5 @@
-import day12.HillClimbingAlgorithm
+import day13.DistressSignal
 
 fun main() {
-    HillClimbingAlgorithm().findWay()
+    DistressSignal().rightOrder()
 }
