@@ -13,12 +13,33 @@ class DistressSignal {
             .let { println(it) }
     }
 
-    private fun compare(left: Element, right: Element): Boolean? = when(left) {
-        is SingleElement -> when(right) {
+    fun sort() {
+        val firstDividerPacket = ListElement(ListElement(SingleElement(2)))
+        val secondDividerPacket = ListElement(ListElement(SingleElement(6)))
+
+        lines()
+            .map { parse(it.iterator()) }
+            .mapNotNull { it.values.firstOrNull() }
+            .plus(firstDividerPacket)
+            .plus(secondDividerPacket)
+            .sortedWith { left, right ->
+                when (compare(left, right)) {
+                    true -> -1
+                    false -> 1
+                    null -> 0
+                }
+            }
+            .toList()
+            .apply { println((indexOf(firstDividerPacket) + 1) * (indexOf(secondDividerPacket) + 1)) }
+    }
+
+    private fun compare(left: Element, right: Element): Boolean? = when (left) {
+        is SingleElement -> when (right) {
             is SingleElement -> if (left.value == right.value) null else (left.value < right.value)
             is ListElement -> compare(ListElement(left), right)
         }
-        is ListElement -> when(right) {
+
+        is ListElement -> when (right) {
             is SingleElement -> compare(left, ListElement(right))
             is ListElement -> left.values
                 .zip(right.values)
