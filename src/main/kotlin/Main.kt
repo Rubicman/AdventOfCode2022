@@ -1,5 +1,5 @@
-import day13.DistressSignal
+import day14.RegolithReservoir
 
 fun main() {
-    DistressSignal().sort()
+    RegolithReservoir().sandSimulation()
 }
