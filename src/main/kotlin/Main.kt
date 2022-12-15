@@ -1,5 +1,5 @@
-import day14.RegolithReservoir
+import day15.BeaconExclusionZone
 
 fun main() {
-    RegolithReservoir().sandSimulation()
+    BeaconExclusionZone().lineNonePositions()
 }
