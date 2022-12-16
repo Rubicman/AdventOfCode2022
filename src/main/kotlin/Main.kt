@@ -1,5 +1,5 @@
-import day15.BeaconExclusionZone
+import day16.ProboscideaVolcanium
 
 fun main() {
-    BeaconExclusionZone().findDistressBeacon()
+    ProboscideaVolcanium().openValves()
 }
