@@ -25,39 +25,41 @@ class ProboscideaVolcanium {
             a.nextNodes.forEach { b -> shortestWays[a.index][b.index] = 1 }
             shortestWays[a.index][a.index] = 0
         }
-        for (i in shortestWays.indices) {
-            for (j in shortestWays.indices) {
-                for (k in shortestWays.indices) {
+        for (k in shortestWays.indices) {
+            for (i in shortestWays.indices) {
+                for (j in shortestWays.indices) {
                     shortestWays[i][j] = minOf(shortestWays[i][j], shortestWays[i][k] + shortestWays[k][j])
                 }
             }
         }
 
-        println(Dfs(nodes.filter { it.value > 0 }, shortestWays)(nameToNode.getValue("AA")))
+        println(Dfs(nodes.filter { it.value > 0 }, shortestWays, nameToNode.getValue("AA"))())
     }
 
     private class Dfs(
         private val nodes: List<Node>,
         private val shortestWays: Array<Array<Int>>,
+        private val startNode: Node,
     ) {
-        operator fun invoke(node: Node, time: Int = TOTAL_MINUTES): Long {
+        operator fun invoke(node: Node = startNode, time: Int = TOTAL_MINUTES, isElephant: Boolean = false): Long {
             var bestResult = 0L
             for (nextNode in nodes) {
                 if (nextNode.isOpen) continue
                 nextNode.isOpen = true
 
-                val newTime = time - 1 - shortestWays[node.index][nextNode.index]
+                val newTime = time - shortestWays[node.index][nextNode.index] - 1
                 if (newTime >= 0) {
-                    bestResult = maxOf(bestResult, invoke(nextNode, newTime) + newTime * nextNode.value)
+                    bestResult = maxOf(bestResult, invoke(nextNode, newTime, isElephant) + newTime * nextNode.value)
                 }
 
                 nextNode.isOpen = false
             }
-            return bestResult
+            val elephantResult = if (isElephant) 0L else invoke(isElephant = true)
+            return maxOf(bestResult, elephantResult)
         }
 
         companion object {
-            private const val TOTAL_MINUTES = 30
+            private const val TOTAL_MINUTES = 26
         }
     }
 }
