@@ -17,9 +17,25 @@ class PyroclasticFlow {
         val occupiedPlaces = mutableSetOf<Pair<Long, Int>>()
         val maxLevels = Array(WIDTH) { -1L }
         var rockNumber = 0L
+        val states = mutableMapOf<State, Pair<Long, Long>>()
+        var diffRockNumber = 0L
+        var diffHeight = 0L
 
         while (true) {
-            if (++rockNumber > TOTAL_ROCKS) break
+            if (diffHeight == 0L) {
+                val state = State(rock, i, maxLevels.min().let { min -> maxLevels.map { it - min } })
+                if (state in states) {
+                    val (oldRockNumber, oldHeight) = states.getValue(state)
+                    val height = maxLevels.max()
+
+                    val loops = (TOTAL_ROCKS - rockNumber) / (rockNumber - oldRockNumber)
+                    diffRockNumber = (rockNumber - oldRockNumber) * loops
+                    diffHeight = (height - oldHeight) * loops
+                }
+                states[state] = rockNumber to maxLevels.max()
+            }
+
+            if (++rockNumber > TOTAL_ROCKS - diffRockNumber) break
 
             val edge = START_POSITION.run { first + maxLevels.max() to second }
             var positions = rock.points.map { it.first + edge.first to it.second + edge.second }
@@ -44,7 +60,7 @@ class PyroclasticFlow {
             rock = rock.next
         }
 
-        println(maxLevels.max() + 1)
+        println(maxLevels.max() + 1 + diffHeight)
     }
 
     private fun printFiled(occupiedPlaces: Set<Pair<Int, Int>>, positions: List<Pair<Int, Int>>) {
@@ -67,7 +83,7 @@ class PyroclasticFlow {
     }
 
     companion object {
-        private const val TOTAL_ROCKS = 2022L
+        private const val TOTAL_ROCKS = 1_000_000_000_000L
         private const val WIDTH = 7
         private val START_POSITION = 4L to 2
     }
@@ -134,3 +150,9 @@ fun stringToPoints(shape: String): List<Pair<Long, Int>> {
         }
     }
 }
+
+data class State(
+    val rock: Rock,
+    val moveIndex: Int,
+    val levels: List<Long>,
+)
