@@ -1,5 +1,5 @@
-import day16.ProboscideaVolcanium
+import day17.PyroclasticFlow
 
 fun main() {
-    ProboscideaVolcanium().openValves()
+    PyroclasticFlow().dropRocks()
 }
