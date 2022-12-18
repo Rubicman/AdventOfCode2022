@@ -1,5 +1,5 @@
-import day17.PyroclasticFlow
+import day18.BoilingBoulders
 
 fun main() {
-    PyroclasticFlow().dropRocks()
+    BoilingBoulders().surfaceArea()
 }
