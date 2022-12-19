@@ -15,18 +15,20 @@ class NotEnoughMinerals {
                     GEODE to mapOf(ORE to it[4], OBSIDIAN to it[5])
                 )
             }
-            .mapIndexed { index, blueprint ->
+            .map { blueprint ->
                 Dfs(blueprint)(
-                minutes = TOTAL_MINUTES,
-                performance = values().associateWith { if (it == ORE) 1L else 0L },
-                collected = values().associateWith { 0L }
-                ) * (index + 1) }
-            .sum()
+                    minutes = TOTAL_MINUTES,
+                    performance = values().associateWith { if (it == ORE) 1L else 0L },
+                    collected = values().associateWith { 0L }
+                )
+            }
+            //.reduce(Long::times)
+            .toList()
             .let(::println)
     }
 
     companion object {
-        private const val TOTAL_MINUTES = 24L
+        private const val TOTAL_MINUTES = 32L
     }
 }
 
@@ -68,7 +70,12 @@ class Dfs(
                 } ?: 0) + 1
 
             val newPerformance = performance.mapValues { if (it.key == robot) it.value + 1 else it.value }
-            val newCollected = collected.mapValues { it.value + neededMinutes * performance.getValue(it.key) - cost.getOrDefault(it.key, 0) }
+            val newCollected = collected.mapValues {
+                it.value + neededMinutes * performance.getValue(it.key) - cost.getOrDefault(
+                    it.key,
+                    0
+                )
+            }
 
             result = maxOf(result, invoke(minutes - neededMinutes, newPerformance, newCollected))
         }
