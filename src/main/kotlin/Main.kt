@@ -1,5 +1,5 @@
-import day18.BoilingBoulders
+import day19.NotEnoughMinerals
 
 fun main() {
-    BoilingBoulders().simulateSteam()
+    NotEnoughMinerals().collectGeodes()
 }
