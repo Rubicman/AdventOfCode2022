@@ -1,5 +1,5 @@
-import day19.NotEnoughMinerals
+import day20.GrovePositioningSystem
 
 fun main() {
-    NotEnoughMinerals().collectGeodes()
+    GrovePositioningSystem().decode()
 }
