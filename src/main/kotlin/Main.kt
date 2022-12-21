@@ -1,5 +1,5 @@
-import day20.GrovePositioningSystem
+import day21.MonkeyMath
 
 fun main() {
-    GrovePositioningSystem().decode()
+    MonkeyMath().monkeyNumber()
 }
