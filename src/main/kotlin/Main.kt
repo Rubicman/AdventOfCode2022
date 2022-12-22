@@ -1,5 +1,5 @@
-import day21.MonkeyMath
+import day22.MonkeyMap
 
 fun main() {
-    MonkeyMath().humanNumber()
+    MonkeyMap().findTheWay()
 }
