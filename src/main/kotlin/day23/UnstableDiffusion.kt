@@ -14,8 +14,10 @@ class UnstableDiffusion {
             }
         }.toSet()
 
-        repeat(ROUNDS) {
-            positions = positions
+        var k = 0
+        while (true) {
+            k++
+            val newPositions = positions
                 .map { position ->
                     (position to position).takeIf {
                         directions.flatMap { it.watched }.distinct().all { position.first + it.first to position.second + it.second !in positions }
@@ -31,10 +33,13 @@ class UnstableDiffusion {
                 .flatMap { (_, list) -> if (list.size == 1) list.map { it.second } else list.map { it.first } }
                 .toSet()
 
+            if (newPositions == positions) break
+            positions = newPositions
+
             directions.add(directions.removeAt(0))
         }
 
-        println((positions.maxOf { it.first } - positions.minOf { it.first } + 1) * (positions.maxOf { it.second } - positions.minOf { it.second } + 1) - positions.size)
+        println(k)
     }
 
     companion object {
