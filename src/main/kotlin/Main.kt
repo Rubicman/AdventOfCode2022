@@ -1,5 +1,5 @@
-import day22.MonkeyMap
+import day23.UnstableDiffusion
 
 fun main() {
-    MonkeyMap().findTheWayOnCube()
+    UnstableDiffusion().elvesMoves()
 }
