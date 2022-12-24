@@ -21,17 +21,29 @@ class BlizzardBasin {
         }.toList()
         val map = Map(blizzards, xBorders, yBorders)
 
-        val queue = ArrayDeque<Pair<Point, Int>>()
-        queue.addLast(start to 0)
-        val used = mutableSetOf<Pair<Point, Int>>()
+        val firstTime = bfs(start, finish, map, xBorders, yBorders, 0)
+        val secondTime = bfs(finish, start, map, xBorders, yBorders, firstTime)
+        val thirdTime = bfs(start, finish, map, xBorders, yBorders, secondTime)
+        println(thirdTime)
+    }
 
+    private fun bfs(
+        start: Point,
+        finish: Point,
+        map: Map,
+        xBorders: IntRange,
+        yBorders: IntRange,
+        startTime: Int
+    ): Int {
+        val queue = ArrayDeque<Pair<Point, Int>>()
+        queue.addLast(start to startTime)
+        val used = mutableSetOf<Pair<Point, Int>>()
         while (queue.isNotEmpty()) {
             val (point, time) = queue.removeFirst()
             if (point to time in used) continue
             used.add(point to time)
             if (point == finish) {
-                println(time)
-                return
+                return time
             }
             if (point in map[time]) continue
             if (point != start && !(point.x in xBorders && point.y in yBorders)) continue
@@ -42,6 +54,7 @@ class BlizzardBasin {
             queue.addLast(point.copy(y = point.y + 1) to time + 1)
             queue.addLast(point.copy(y = point.y - 1) to time + 1)
         }
+        throw IllegalStateException("Exit must be reached")
     }
 
     class Map(
@@ -73,13 +86,13 @@ class BlizzardBasin {
 data class Point(val x: Int, val y: Int)
 
 enum class Direction(val dx: Int, val dy: Int) {
-    UP(0 ,-1),
+    UP(0, -1),
     DOWN(0, 1),
     LEFT(-1, 0),
     RIGHT(1, 0);
 
     companion object {
-        fun of(char: Char): Direction? = when(char) {
+        fun of(char: Char): Direction? = when (char) {
             '^' -> UP
             'v' -> DOWN
             '<' -> LEFT
@@ -92,5 +105,5 @@ enum class Direction(val dx: Int, val dy: Int) {
 class Blizzard(
     var x: Int,
     var y: Int,
-    val direction: Direction
+    val direction: Direction,
 )
