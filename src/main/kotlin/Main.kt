@@ -1,5 +1,5 @@
-import day23.UnstableDiffusion
+import day24.BlizzardBasin
 
 fun main() {
-    UnstableDiffusion().elvesMoves()
+    BlizzardBasin().avoidBlizzards()
 }
