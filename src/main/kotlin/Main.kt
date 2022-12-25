@@ -1,5 +1,5 @@
-import day24.BlizzardBasin
+import day25.FullOfHotAir
 
 fun main() {
-    BlizzardBasin().avoidBlizzards()
+    FullOfHotAir().fuelAmount()
 }
